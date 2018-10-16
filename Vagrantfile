@@ -31,11 +31,17 @@ Vagrant.configure("2") do |config|
   config.vm.define "mgmt" do |mgmt|
 	mgmt.vm.box = "centos/7"
 	mgmt.vm.hostname = "mgmt"
-
+	mgmt.vm.network :forwarded_port, guest: 3389, host: 13389
 	mgmt.vm.network :private_network, ip: "192.168.56.10"
+	config.vm.provision "shell", inline: $script
   end
 
-config.vm.provision "shell", inline: $script
 
+  config.vm.define "switch" do |sw|
+	sw.vm.box = "CumulusCommunity/cumulus-vx"
+	sw.vm.hostname = "sw1"
+	sw.vm.network :forwarded_port, guest: 22, host: 10122
+	sw.vm.network :private_network, virtualbox__intnet: "link_sw1"
+  end
 
 end
