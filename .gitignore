@@ -1,0 +1,16 @@
+.vagrant/machines/mgmt/virtualbox/vagrant_cwd
+.vagrant/machines/mgmt/virtualbox/action_provision
+.vagrant/machines/mgmt/virtualbox/action_set_name
+.vagrant/machines/mgmt/virtualbox/box_meta
+.vagrant/machines/mgmt/virtualbox/creator_uid
+.vagrant/machines/mgmt/virtualbox/id
+.vagrant/machines/mgmt/virtualbox/index_uuid
+.vagrant/machines/mgmt/virtualbox/private_key
+.vagrant/machines/mgmt/virtualbox/synced_folders
+.vagrant/machines/switch/virtualbox/vagrant_cwd
+.vagrant/machines/switch/virtualbox/action_set_name
+.vagrant/machines/switch/virtualbox/box_meta
+.vagrant/machines/switch/virtualbox/creator_uid
+.vagrant/machines/switch/virtualbox/id
+.vagrant/machines/switch/virtualbox/index_uuid
+.vagrant/machines/switch/virtualbox/private_key
