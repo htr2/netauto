@@ -9,7 +9,7 @@ VAGRANTFILE_API_VERSION = "2"
 require 'yaml'
 
 # mgmt station shell script to install desired sw 
-$script = <<-SCRIPT
+$script1 = <<-SCRIPT
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 sudo yum -y install code
@@ -44,20 +44,35 @@ Vagrant.configure("2") do |config|
 	mgmt.vm.network :forwarded_port, guest: 443, host: 20002
 	mgmt.vm.network :forwarded_port, guest: 3389, host: 20003
 	mgmt.vm.network :private_network, ip: "192.168.56.10"
-	config.vm.provision "shell", inline: $script
+	mgmt.vm.provision "shell", inline: $script1
   end
 
-#fabric definition (using external yaml file)
+  #fabric definition (using external yaml file)
  
-# Read YAML file 
-vagrant_root = File.dirname(__FILE__)
-hosts = YAML.load_file(vagrant_root + '/fabric_topology.yml')
+  # Read YAML file 
+  vagrant_root = File.dirname(__FILE__)
+  hosts = YAML.load_file(vagrant_root + '/fabric_topology.yml')
 
-  config.vm.define "switch" do |sw|
-	sw.vm.box = "CumulusCommunity/cumulus-vx"
-	sw.vm.hostname = "sw1"
-	sw.vm.network :forwarded_port, guest: 22, host: 10122
-	sw.vm.network :private_network, virtualbox__intnet: "link_sw1"
-  end
+	hosts.each do |host|
+		config.vm.define host["name"] do |sw|
+			sw.vm.box = host["box"]
+			sw.vm.hostname = host["name"]
+			if host.key?("forwarded_ports")
+				host["forwarded_ports"].each do |port|
+					sw.vm.network :forwarded_port, guest: port["guest"], host: port["host"], id: port["name"]
+				end
+			end
+
+			if host.key?("links")
+				host["links"].each do |link|
+					ipaddr = if link.key?("ip") then link["ip"] else "169.254.1.11" end
+					sw.vm.network "private_network", virtualbox__intnet: link["name"], ip: ipaddr, auto_config: false
+				end
+			end
+
+
+		end
+
+	end
 
 end

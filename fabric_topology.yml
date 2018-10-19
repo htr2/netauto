@@ -1,6 +1,6 @@
 ---
 - name: SP1
-  box: cumulus-vx 
+  box: CumulusCommunity/cumulus-vx 
   links:
     - name: SP1LF1
     - name: SP1LF2
@@ -9,7 +9,7 @@
     - { guest: 443, host: 21201 } 
 
 - name: SP2
-  box: cumulus-vx
+  box: CumulusCommunity/cumulus-vx
   links:
     - name: SP2LF1
     - name: SP2LF2
@@ -18,7 +18,7 @@
     - { guest: 443, host: 21202 } 
 
 - name: LF1
-  box: cumulus-vx
+  box: CumulusCommunity/cumulus-vx
   links:
     - name: SP1LF1
     - name: SP2LF1
@@ -27,7 +27,7 @@
     - { guest: 443, host: 21101 } 
 
 - name: LF2
-  box: cumulus-vx
+  box: CumulusCommunity/cumulus-vx
   links:
     - name: SP1LF2
     - name: SP2LF2
