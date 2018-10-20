@@ -1,0 +1,27 @@
+MGMT ansible_host=10.0.2.2 ansible_port=#<Vagrant::Config::V2::DummyConfig:0x00000000045d11b0> 
+SW201 ansible_host=10.0.2.2 ansible_port=#<Vagrant::Config::V2::DummyConfig:0x000000000554d828> 
+SW202 ansible_host=10.0.2.2 ansible_port=#<Vagrant::Config::V2::DummyConfig:0x00000000056bcbc8> 
+SW101 ansible_host=10.0.2.2 ansible_port=#<Vagrant::Config::V2::DummyConfig:0x0000000004781848> 
+SW102 ansible_host=10.0.2.2 ansible_port=#<Vagrant::Config::V2::DummyConfig:0x0000000004eacbe0> 
+MGMT ansible_host=10.0.2.2 ansible_port=[{"guest"=>22, "host"=>20010}, {"guest"=>443, "host"=>21010}, {"guest"=>3389, "host"=>22010}] 
+SW201 ansible_host=10.0.2.2 ansible_port=[{"guest"=>22, "host"=>20201}, {"guest"=>443, "host"=>21201}] 
+SW202 ansible_host=10.0.2.2 ansible_port=[{"guest"=>22, "host"=>20202}, {"guest"=>443, "host"=>21202}] 
+SW101 ansible_host=10.0.2.2 ansible_port=[{"guest"=>22, "host"=>20101}, {"guest"=>443, "host"=>21101}] 
+SW102 ansible_host=10.0.2.2 ansible_port=[{"guest"=>22, "host"=>20102}, {"guest"=>443, "host"=>21102}] 
+MGMT ansible_host=10.0.2.2 ansible_port=[{"guest"=>22, "host"=>20010}, {"guest"=>443, "host"=>21010}, {"guest"=>3389, "host"=>22010}] 
+
+{"name"=>"MGMT", "box"=>"centos/7", "links"=>[{"name"=>"201-101"}, {"name"=>"201-102"}], "forwarded_ports"=>[{"guest"=>22, "host"=>20010}, {"guest"=>443, "host"=>21010}, {"guest"=>3389, "host"=>22010}], "mgmt_ip"=>"192.168.56.10", "script"=>"mgmt.sh"}  
+
+
+SW201 ansible_host=10.0.2.2 ansible_port=[{"guest"=>22, "host"=>20201}, {"guest"=>443, "host"=>21201}]
+ 
+{"name"=>"SW201", "box"=>"CumulusCommunity/cumulus-vx", "links"=>[{"name"=>"201-101"}, {"name"=>"201-102"}], "forwarded_ports"=>[{"guest"=>22, "host"=>20201}, {"guest"=>443, "host"=>21201}], "mgmt_ip"=>"192.168.56.201"}  
+
+
+
+SW202 ansible_host=10.0.2.2 ansible_port=[{"guest"=>22, "host"=>20202}, {"guest"=>443, "host"=>21202}] 
+{"name"=>"SW202", "box"=>"CumulusCommunity/cumulus-vx", "links"=>[{"name"=>"202-101"}, {"name"=>"202-102"}], "forwarded_ports"=>[{"guest"=>22, "host"=>20202}, {"guest"=>443, "host"=>21202}], "mgmt_ip"=>"192.168.56.202"}  
+SW101 ansible_host=10.0.2.2 ansible_port=[{"guest"=>22, "host"=>20101}, {"guest"=>443, "host"=>21101}] 
+{"name"=>"SW101", "box"=>"CumulusCommunity/cumulus-vx", "links"=>[{"name"=>"201-101"}, {"name"=>"202-101"}], "forwarded_ports"=>[{"guest"=>22, "host"=>20101}, {"guest"=>443, "host"=>21101}], "mgmt_ip"=>"192.168.56.101"}  
+SW102 ansible_host=10.0.2.2 ansible_port=[{"guest"=>22, "host"=>20102}, {"guest"=>443, "host"=>21102}] 
+{"name"=>"SW102", "box"=>"CumulusCommunity/cumulus-vx", "links"=>[{"name"=>"201-102"}, {"name"=>"202-102"}], "forwarded_ports"=>[{"guest"=>22, "host"=>20102}, {"guest"=>443, "host"=>21102}], "mgmt_ip"=>"192.168.56.102"}  

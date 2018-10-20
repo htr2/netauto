@@ -1,5 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+#https://github.com/ipspace/NetOpsWorkshop/blob/master/topologies/EOS-Leaf-and-Spine/Vagrantfile
 
 # Specify minimum Vagrant version and Vagrant API version
 Vagrant.require_version ">= 1.6.0"
@@ -30,8 +31,11 @@ end
 
 # Install ssh key
 # 
-# Uncomment the next line if you're using ssh-agent
-# install_ssh_key
+# Uncomment the next line if you're using ssh-agent, start ssh-agent service on windows10
+install_ssh_key
+#https://devops.stackexchange.com/questions/1237/how-do-i-configure-ssh-keys-in-a-vagrant-multi-machine-setup
+#https://www.phase2technology.com/blog/running-ssh-agent-vagrant
+#https://www.vagrantup.com/docs/synced-folders/basic_usage.html
 
 # Check certain plugins are installed
 install_plugins required_plugins
@@ -46,6 +50,7 @@ require 'yaml'
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vbguest.auto_update = false	
+  config.ssh.forward_agent = true
   
   #use external yaml file to create hosts 
   vagrant_root = File.dirname(__FILE__)
@@ -72,22 +77,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			end
 
 			File.open("ansible_inventory" ,'a') do |f|
-				f.write "#{host["name"]} ansible_host=10.0.2.2 ansible_port=#{host["forwarded_ports"]["host"]} \n"
-				#http://www.korenlc.com/nested-arrays-hashes-loops-in-ruby/
+				f.write "#{host["name"]} ansible_host=10.0.2.2 ansible_port=#{host["forwarded_ports"][0]["host"]} api_port=#{host["forwarded_ports"][1]["host"]} ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/#{host["name"]}/virtualbox/private_key \n"
 		  	end
 
-			#spine-1 ansible_host=10.0.2.2 ansible_port=20001 api_port=21001 os=eos ansible_user=admin ansible_ssh_pass=admin
-
-			###provisioners		
-			if host.key?("script")
-				node.vm.provision "shell", path: host["script"]
-			end
+			###provisioners
 
 			#does not work on windows...
 			#call noop ansible playbook to get auto created ansible inventory 
 			#node.vm.provision "ansible" do |ansible|
 			#	ansible.playbook = "playbook.yml"
 			#end
+
+			if host.key?("script")
+				node.vm.provision "shell", path: host["script"]
+			end
+
+
 
 		end
 	end
