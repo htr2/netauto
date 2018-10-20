@@ -51,22 +51,22 @@ Vagrant.configure("2") do |config|
  
   # Read YAML file 
   vagrant_root = File.dirname(__FILE__)
-  hosts = YAML.load_file(vagrant_root + '/fabric_topology.yml')
+  hosts = YAML.load_file(vagrant_root + '/fabric_topology2.yml')
 
 	hosts.each do |host|
 		config.vm.define host["name"] do |sw|
 			sw.vm.box = host["box"]
 			sw.vm.hostname = host["name"]
+			sw.vm.network :private_network, ip: host["mgmt_ip"]
 			if host.key?("forwarded_ports")
 				host["forwarded_ports"].each do |port|
-					sw.vm.network :forwarded_port, guest: port["guest"], host: port["host"], id: port["name"]
+					sw.vm.network :forwarded_port, guest: port["guest"], host: port["host"]
 				end
 			end
 
 			if host.key?("links")
 				host["links"].each do |link|
-					ipaddr = if link.key?("ip") then link["ip"] else "169.254.1.11" end
-					sw.vm.network "private_network", virtualbox__intnet: link["name"], ip: ipaddr, auto_config: false
+					sw.vm.network "private_network", virtualbox__intnet: link["name"], auto_config: false
 				end
 			end
 

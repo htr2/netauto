@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+
+    <!--ip-172-30-1-227-->
+    <!--5.13.0-->
+
+    <!-- Google Tag Manager -->
+    <script type="text/javascript" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/pd.js"></script><script type="text/javascript" async="" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/2zfcrncpyvii.js"></script><script type="text/javascript" async="" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/6si.js"></script><script type="text/javascript" async="" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/bf-munchkin.js"></script><script async="" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/tag.aspx"></script><script async="" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/gf.js"></script><script type="text/javascript" async="" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/insight.js"></script><script type="text/javascript" async="" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/sf14g.js"></script><script async="" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/web.js"></script><script async="" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/analytics.js"></script><script async="" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/gtm.js"></script><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K5RNZG');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40724538-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+
+    <!-- Begin Persosa code -->
+    <script>
+      !function(c,n,a,i){c.PersosaObject=i,c[i]=c[i]||function(e,s,t,r,o){"init"===e&&s?(t=t||{},(o=n.createElement(a)).async=!1!==t.jsAsync,o.src="//edn.persosa.com/web.js?id="+s+"&o="+btoa(JSON.stringify({p:c.location.href,r:n.referrer,cux:!1!==t.consistentUX,co:!!t.campaignOverride,ar:!1!==t.autoRender})),(r=n.querySelector("head")).insertBefore(o,r.querySelector(a)),!1!==t.loadCSS&&((o=n.createElement("link")).type="text/css",o.rel="stylesheet",o.href="//cdn.persosa.com/t/"+s+"/c/_live/"+c.location.hostname+".css",o.async=0,r.appendChild(o),setTimeout(function(){n.body.classList.add("persosa-r")},3e3))):(c[i].q=c[i].q||[]).push(arguments)}}(window,document,"script","persosa");
+          persosa('init', '92007c40-8fac-433b-a284-aa086fc3f0a8', {
+          autoRender: true,
+          consistentUX: true,
+          campaignOverride: false
+        });
+
+      
+      
+      persosa('ga', 'analytics');
+
+    </script><link type="text/css" rel="stylesheet" href="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/cumulusnetworks.css">
+    <!-- End Persosa code -->
+
+    
+    <title>Linux networking commands cheat sheet | Cumulus Networks</title>
+    
+
+    
+    <meta name="description" content="Use this document to look up the most common commands used in Cumulus Linux with explanations on how to use them.">
+    
+
+    
+
+    
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@cumulusnetworks">
+    <meta name="twitter:creator" content="@cumulusnetworks">
+
+    <!-- Open Graph -->
+    <meta property="og:url" content="https://cumulusnetworks.com/learn/web-scale-networking-resources/product-collateral/linux-networking-cheat-sheet/">
+    
+    <meta property="og:title" content="Linux networking commands cheat sheet | Cumulus Networks">
+    
+
+    
+    <meta property="og:description" content="Use this document to look up the most common commands used in Cumulus Linux with explanations on how to use them.">
+    
+
+    
+    
+    <meta property="og:image" content="https://cumulusnetworks.com/media/images/Screen_Shot_2018-05-15_at_5.04.19_PM.original.png">
+    
+
+    <meta property="og:type" content="website">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Canonical tag -->
+    
+    <link rel="canonical" href="https://cumulusnetworks.com/learn/web-scale-networking-resources/product-collateral/linux-networking-cheat-sheet/">
+    
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://cumulusnetworks.com/static/images/shared/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://cumulusnetworks.com/static/images/shared/favicon-96x96.png">
+
+    <!-- Blog feed -->
+    <link rel="alternate" type="application/rss+xml" title="Cumulus Networks Blog" href="https://cumulusnetworks.com/blog/feed/">
+
+    <!-- Fonts -->
+    <link href="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/css.css" rel="stylesheet">
+    <link href="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/icon.css" rel="stylesheet">
+    <link href="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/fonts.css" rel="stylesheet">
+    <link rel="stylesheet" href="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/bkx6fxs.css">
+
+    <!-- Icon font libraries -->
+    <link rel="stylesheet" type="text/css" media="screen" href="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/ionicons.css">
+    <link rel="stylesheet" type="text/css" href="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/socialicious.css">
+
+    <!-- Cookies Consent -->
+    <link rel="stylesheet" type="text/css" href="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/cookieconsent.css">
+
+    <!-- Toast Messages -->
+    <link rel="stylesheet" type="text/css" href="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/toastr.css">
+
+    <link rel="stylesheet" href="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/2c23b2d2429b.css" type="text/css">
+
+    <!-- Custom styles for this template  -->
+    <link href="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/app.css" rel="stylesheet">
+
+    <!-- Inline styles -->
+    <style>
+        /* Prevent Google Optimize flicker */
+        .async-hide { opacity: 0 !important }
+        
+        /* Prevent bottom gap from Terminus <img> tag */
+        img[src*="vidassets.terminus.services"] { display: none !important }
+    </style>
+
+    
+        
+    
+    
+    
+<style>
+  h1, h2 {
+    display: block;
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    font-size: 2px;
+    line-height: 0;
+    margin: 0;
+  }
+  .the-canvas {
+    height: 100vh;
+  }
+</style>
+
+
+  <style type="text/css">.text-xs{font-size:11px}.text-s{font-size:13px}.text-m{font-size:15px}.text-l{font-size:18px}.text-xl{font-size:22px}.text-6xl{font-size:72px}.gf-u-reset,.gf-u-reset *{background-attachment:scroll;background-color:transparent;background-image:none;background-position:0 0;background-repeat:repeat;border-color:black;border-style:none;border-width:medium;box-sizing:border-box;clear:none;clip:auto;color:inherit;counter-increment:none;counter-reset:none;direction:inherit;display:block;float:none;font-family:inherit;font-size:inherit;font-style:inherit;font-variant:normal;font-weight:inherit;height:auto;letter-spacing:normal;line-height:inherit;list-style-type:inherit;list-style-position:inside;list-style-image:none;margin:0;min-height:0;max-height:none;max-width:none;outline:invert none medium;overflow:visible;padding:0;position:static;quotes:"" "";table-layout:auto;text-align:inherit;text-decoration:inherit;text-transform:none;unicode-bidi:normal;vertical-align:baseline;visibility:inherit;white-space:normal;width:auto;word-spacing:normal;z-index:auto;border-radius:0;-moz-border-radius:0;-webkit-border-radius:0;opacity:1}.gf-Widget-toggle{background:#222;color:white;font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.gf-is-loading.gf-Widget:before,.gf-Lightbox-overlay .gf-is-loading.gf-Lightbox-container:before{content:"";position:absolute;top:0;bottom:0;right:0;left:0;background:#FFF}.gf-Widget{position:fixed;width:380px;height:325px;visibility:hidden;opacity:0;z-index:999999999;background:transparent;box-sizing:content-box;box-shadow:1px 0 10px rgba(0,0,0,0.2);overflow:hidden;bottom:72px;border-radius:4px;-webkit-transition:visibility 0s 0.3s, opacity 0.3s, bottom 0.3s;-moz-transition:visibility 0s 0.3s, opacity 0.3s, bottom 0.3s;transition:visibility 0s 0.3s, opacity 0.3s, bottom 0.3s}.gf-Widget.gf-Widget--bottomRight{right:20px}.gf-Widget.gf-Widget--bottomLeft{left:20px}.gf-Widget.gf-is-open{visibility:visible;opacity:1;transition-delay:0s;bottom:80px}.gf-Widget--bottomRight{right:15px}.gf-Widget--bottomLeft{left:15px}.gf-Widget-iframe{position:static;border:0;height:100%;width:380px}.gf-Widget-toggle{position:absolute;top:0;right:0px;width:30px;height:30px;text-align:center;cursor:pointer;background:transparent}.gf-Widget-toggle .gf-Widget-toggleIcon{margin-top:4px;margin-right:4px;line-height:26px;font-size:18px;font-weight:200}.gf-is-minimized .gf-Widget-toggle .gf-Widget-toggleIcon{display:none}.gf-is-minimized .gf-Widget-toggle .gf-Widget-toggleIcon.is-lightbox{display:block}.gf-is-open .gf-Widget-toggle .gf-Widget-toggleIcon{display:block}.gf-Lightbox-overlay{position:absolute;top:0;bottom:0;left:0;right:0;position:fixed;z-index:-999999999;background:rgba(0,0,0,0.2);opacity:0;visibility:hidden;background-color:rgba(0,0,0,0.4);background-image:-webkit-radial-gradient(50% 20%, circle, rgba(255,255,255,0.25), rgba(0,0,0,0.8));background-image:radial-gradient(circle at 50% 20%, rgba(255,255,255,0.25), rgba(0,0,0,0.8));-webkit-transition:opacity 0.15s linear;-moz-transition:opacity 0.15s linear;transition:opacity 0.15s linear}.gf-Lightbox-overlay .gf-Lightbox-container{position:absolute;box-shadow:0 0 7px rgba(0,0,0,0.5);height:500px}.gf-Lightbox-overlay.gf-is-mobile.gf-is-ios{position:absolute}.gf-Lightbox-overlay.gf-is-mobile .gf-Lightbox-container{position:absolute;top:10vh;left:2vw;right:2vw;height:70vh}.gf-Lightbox-overlay.gf-is-open{visibility:visible;z-index:999999999}.gf-Lightbox-overlay.gf-is-shown{opacity:1}.gf-Lightbox-overlay.gf-no-mobile .gf-Lightbox-container{-webkit-transition:opacity 0.25s, margin 0.25s;-moz-transition:opacity 0.25s, margin 0.25s;transition:opacity 0.25s, margin 0.25s;top:40%;left:50%;width:600px;margin-top:-160px}.gf-Lightbox-overlay.gf-no-mobile .gf-Lightbox-container.gf-Lightbox--bottomLeft{margin-left:-320px}.gf-Lightbox-overlay.gf-no-mobile .gf-Lightbox-container.gf-Lightbox--bottomRight{margin-left:-280px}.gf-Lightbox-overlay.gf-no-mobile.gf-is-shown .gf-Lightbox-container{margin-top:-190px;margin-left:-300px;overflow:hidden;border-radius:3px}.gf-Lightbox-iframe{position:static;width:100%;height:500px;border:0}.gf-is-mobile .gf-Lightbox-iframe{height:100%}.gf-Lightbox-header-closeButton{position:absolute;top:0px;right:7px;font-size:20px;font-weight:300;cursor:pointer}.gf-is-mobile .gf-Lightbox-header-closeButton{width:34px;height:34px;padding:7px 7px 14px 17px}body.gf-noscroll{overflow:hidden !important}.gf-Bobblehead-wrapper{position:fixed;z-index:999999999;box-sizing:content-box;box-shadow:0 0px 7px rgba(0,0,0,0.4);overflow:hidden;border-radius:50px;opacity:1;-webkit-transition:width 0.25s, padding 0.25s, opacity 0.25s;-moz-transition:width 0.25s, padding 0.25s, opacity 0.25s;transition:width 0.25s, padding 0.25s, opacity 0.25s;bottom:20px;background:transparent;width:52px;height:52px;pointer-events:none}.gf-Bobblehead-wrapper .gf-Bobblehead{cursor:pointer;pointer-events:all}.gf-Bobblehead-wrapper .gf-Bobblehead .gf-Bobblehead-icon{display:inline-block;box-sizing:content-box;width:24px;height:24px;padding:14px}.gf-Bobblehead-wrapper .gf-Bobblehead .gf-Bobblehead-icon svg{width:24px;height:24px}.gf-Bobblehead-wrapper .gf-Bobblehead .gf-Bobblehead-icon .bobblehead-icon{fill-rule:evenodd}.gf-Bobblehead-wrapper .gf-Bobblehead .gf-Bobblehead-label{float:right;height:52px;line-height:52px;margin:0 30px 0 0;font-size:16px}.gf-Bobblehead-wrapper.gf-is-mobile{width:45px;height:45px}.gf-Bobblehead-wrapper.gf-is-mobile .gf-Bobblehead-icon{width:17px;height:17px}.gf-Bobblehead-wrapper.gf-is-mobile .gf-Bobblehead-icon svg{width:17px;height:17px}.gf-Bobblehead-wrapper.gf-has-label{padding-left:8px}.gf-Bobblehead-wrapper.gf-hide-label{padding-left:0px !important;width:52px !important}.gf-Bobblehead-wrapper.gf-hide-label.gf-is-mobile{width:45px !important}.gf-Bobblehead-wrapper.gf-is-hidden{-webkit-transition:width 0.25s, padding 0.25s, opacity 0.25s, visibility 0s 0.25s;-moz-transition:width 0.25s, padding 0.25s, opacity 0.25s, visibility 0s 0.25s;transition:width 0.25s, padding 0.25s, opacity 0.25s, visibility 0s 0.25s;width:auto;visibility:hidden;opacity:0}.gf-Bobblehead-wrapper.gf-is-hidden .gf-Bobblehead{cursor:auto;pointer-events:none}.gf-Bobblehead-wrapper.gf-is-open{width:52px !important;padding-left:0px !important}.gf-Bobblehead-wrapper.gf-is-open.gf-is-mobile{width:45px !important}.gf-Bobblehead--bottomRight{right:20px}.gf-Bobblehead--bottomLeft{left:20px}
+</style><style type="text/css" id="gf-widget-height">.gf-Widget.gf-is-open { height: 325px; }</style><script async="true" type="text/javascript" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/roundtrip.js"></script></head>
+  <body class="persosa-r" data-spy="scroll" data-target=".scrollspy" data-offset="100">
+
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K5RNZG"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+
+        
+  
+    <nav class="frame-navigation m-navigation m-navigation--dark">
+    <div class="container-fluid">
+        <div class="m-navbar-wrapper">
+            <a class="navbar-brand" href="https://cumulusnetworks.com/" target="_top"></a>
+            <ul class="navbar--center">
+                <li><a class="m-navbar__link" href="https://cumulusnetworks.com/learn/web-scale-networking-resources/" target="_top"><i class="ion-chevron-left"></i> All Resources</a></li>
+                <li><a class="m-navbar__link hidden-sm hidden-xs" href="https://cumulusnetworks.com/products/" target="_top">Products</a></li>
+                <li><a class="m-navbar__link hidden-sm hidden-xs" href="https://cumulusnetworks.com/networking-solutions/" target="_top">Solutions</a></li>
+                <li><a class="m-navbar__link hidden-sm hidden-xs" href="https://cumulusnetworks.com/learn/" target="_top">Learn</a></li>
+                <li><a class="m-navbar__link hidden-sm hidden-xs" href="https://cumulusnetworks.com/products/cumulus-vx/" target="_top">Download VX</a></li>
+            </ul>
+            <ul class="navbar--right">
+                <li><a href="https://cumulusnetworks.com/contact/" target="_top" class="m-navbar__link m-button m-button-uppercase hidden-xs">Contact Us</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+  
+
+
+        
+
+        <div class="wrapper">
+            
+<div class="the-canvas">
+  <h1>Linux for Networking Cheat Sheet</h1>
+  <h2>Another PDF resource brought to you by Cumulus Networks</h2>
+  <iframe id="pdf-view" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/gview.html" class=" bf_frame_init" width="100%" height="100%"></iframe>
+</div>
+
+
+        </div>
+
+        
+            <footer id="footer">
+	<section class="footer__section footer__section--top">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4 col-md-3">
+					<div class="footer__content">
+						<img src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/cumulus-networks-logo-white.svg">
+						© <script type="text/javascript">document.write(new Date().getFullYear());</script>2018 Cumulus Networks.<br>
+						Bringing web-scale networking to the enterprise cloud.<br><br>
+						Site by <a href="https://unomena.com/" target="_blank">Unomena</a>.<br>
+					</div>
+				</div>
+				<div class="col-sm-8 col-md-9">
+					<div class="row">
+						<div class="footer__col">
+							<h3 class="footer__nav footer__nav--header">Products</h3>
+							<ul class="footer__nav">
+								<li><a href="https://cumulusnetworks.com/products/cumulus-linux/">Cumulus Linux</a></li>
+								<li><a href="https://cumulusnetworks.com/products/netq/">NetQ</a></li>
+								<li><a href="https://cumulusnetworks.com/products/voyager/">Voyager</a></li>
+								<li><a href="https://cumulusnetworks.com/products/cumulus-express/">Cumulus Express</a></li>
+							</ul>
+						</div>
+						<div class="footer__col">
+							<h3 class="footer__nav footer__nav--header">Learn</h3>
+							<ul class="footer__nav">
+								<li><a href="https://cumulusnetworks.com/learn/web-scale-networking-education/">Going web-scale</a></li>
+								<li><a href="https://cumulusnetworks.com/learn/events/">Events</a></li>
+								<li><a href="https://cumulusnetworks.com/blog/">Blog</a></li>
+							</ul>
+						</div>
+						<div class="footer__col">
+							<h3 class="footer__nav footer__nav--header">About</h3>
+							<ul class="footer__nav">
+								<li><a href="https://cumulusnetworks.com/about/">Our story</a></li>
+								<li><a href="https://cumulusnetworks.com/about/careers/">Careers</a></li>
+								<li><a href="https://cumulusnetworks.com/about/media-coverage/">Media coverage</a></li>
+								<li><a href="https://docs.cumulusnetworks.com/" target="_blank">Tech docs</a></li>
+								<li><a href="https://cumulusnetworks.com/community/">Community</a></li>
+							</ul>
+						</div>
+						<ul class="footer__nav footer__nav--hexagons">
+							<li>
+								<a href="https://twitter.com/CumulusNetworks/" target="_blank"><img src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/hexagon-twitter.png"></a>
+							</li>
+							<li>
+								<a href="https://www.facebook.com/CumulusNetworks/" target="_blank"><img src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/hexagon-facebook.png"></a>
+							</li>
+							<li>
+								<a href="https://linkedin.com/company/cumulus-networks/" target="_blank"><img src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/hexagon-linkedin.png"></a>
+							</li>
+							<li>
+								<a href="https://vimeo.com/CumulusNetworks/" target="_blank"><img src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/hexagon-vimeo.png"></a>
+							</li>
+							<li>
+								<a href="https://www.github.com/cumulusnetworks/" target="_blank"><img src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/hexagon-git.png"></a>
+							</li>
+							<li>
+								<a href="https://slack.cumulusnetworks.com/" target="_blank"><img src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/hexagon-slack.png"></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="footer__section footer__section--bottom">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<ul class="footer__nav">
+						<li><a href="https://cumulusnetworks.com/legal/trademarks/">Trademarks</a></li>
+						<li><a href="https://cumulusnetworks.com/legal/privacy/">Privacy</a></li>
+						<li><a href="https://cumulusnetworks.com/legal/">Terms of service</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+</footer>
+         
+
+        <!-- Scripts placed at the end of the document for faster page load -->
+        <script type="text/javascript" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/8b396f2b6fdf.js"></script>
+
+        <!-- Get User Location Via IP Lookup-->
+        <script type="text/javascript" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/jquery.js"></script>
+        <script>
+        function ipLookUp () {
+        var euCountries = [
+            'BE', 'BG', 'CZ', 'DK', 'DE', 'EE', 
+            'IE', 'EL', 'ES', 'FR', 'HR', 'IT', 
+            'CY', 'LV', 'LT', 'LU', 'HU', 'MT', 
+            'NL', 'AT', 'PL', 'PT', 'RO', 'SI', 
+            'SK', 'FI', 'SE', 'UK'
+        ];
+        var i;
+
+        $("#disclaimerBlock").hide();
+
+        $.ajax('https://api.ipgeolocation.io/timezone?apiKey=55155f92bd9b47ef999111f83bc57a95')
+        .then(
+            function success(response) {
+                for (i = 0; i < euCountries.length; i++){
+                    if (euCountries[i] == response.geo.country_code2 ){
+                        cookieConsent()
+                        $("#disclaimerBlock").show();
+                    }
+                }
+            },
+            function fail(data, status) {
+                cookieConsent()
+                $("#disclaimerBlock").show();
+                console.log('Request failed.  Returned status of', status);
+            }
+          );
+        }
+        ipLookUp()
+        </script>
+
+        <!-- Cookie Consent -->
+        <script src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/cookieconsent.js"></script>
+        <script>
+        function cookieConsent () {
+            window.addEventListener("load", function(){
+            window.cookieconsent.initialise({
+              "palette": {
+                "popup": {
+                  "background": "#f6f8fa",
+                  "text": "#36424a"
+                },
+                "button": {
+                  "background": "#00ad69"
+                },
+              },
+              "theme": "edgeless",
+              // "type": "opt-in",
+              "content": {
+                // "dismiss": "Dismiss",
+                "allow": "Accept",
+                "href": "/legal/privacy/"
+              }
+            })});
+        }
+        </script>
+            
+        <!-- Pardot Website Tracking code -->
+        <script>
+            piAId = '33472';
+            piCId = '1190';
+            (function(){
+                function async_load(){ var s = document.createElement('script'); s.type = 'text/javascript'; s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js'; var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c); }
+                if(window.attachEvent){ window.attachEvent('onload', async_load); }else{ window.addEventListener('load', async_load, false); }
+            })();
+        </script>
+
+        <!-- Terminus -->
+        <script id="term-e7e5d07437489" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/t.js"></script><img src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/t.gif">
+
+        <!-- Drift -->
+        <script>
+        "use strict";
+
+        !function() {
+          var t = window.driftt = window.drift = window.driftt || [];
+          if (!t.init) {
+            if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice."));
+            t.invoked = !0, t.methods = [ "identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on" ], 
+            t.factory = function(e) {
+              return function() {
+                var n = Array.prototype.slice.call(arguments);
+                return n.unshift(e), t.push(n), t;
+              };
+            }, t.methods.forEach(function(e) {
+              t[e] = t.factory(e);
+            }), t.load = function(t) {
+              var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script");
+              o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js";
+              var i = document.getElementsByTagName("script")[0];
+              i.parentNode.insertBefore(o, i);
+            };
+          }
+        }();
+        drift.SNIPPET_VERSION = '0.3.1';
+        drift.load('2zfcrncpyvii');
+        </script>
+
+        <!-- Linkedin (noscript) -->
+        <noscript><img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=20007&fmt=gif" /></noscript>
+
+        <!-- Toast Messages -->
+        <script src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/toastr.js"></script>
+        <script type="text/javascript">
+            toastr.options.closeButton = true,
+            toastr.options.closeDuration = 10;
+            
+        </script>
+
+        
+<script async="" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/widgets.js" charset="utf-8"></script>
+
+<script>
+  var loaded = false;
+
+  
+    var addthisScript = document.createElement('script');
+    addthisScript.setAttribute('src', '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-59e08db87b5be0a7');
+    document.body.appendChild(addthisScript);
+  
+
+  $('#pdf-view').on('load', function() {
+    loaded = true;
+  });
+
+  function waitForElement(id, callback){
+      var interval = setInterval(function(){
+          if(document.getElementById(id)){
+              clearInterval(interval);
+              callback();
+          }
+      }, 100);
+  }
+
+  waitForElement("at4-share", function(){
+      $('#at4-share').prepend('<span class="at4-share-label"><i class="ion-ios-download-outline"></i></span>');
+  });
+	
+	$(document).ready(function() {
+
+    var src = $("#pdf-view").attr('src');
+
+    function checkLoaded() {
+      if(loaded == false) {
+        console.log('Reloading iframe');
+
+        document.getElementById('pdf-view').src = document.getElementById('pdf-view').src;
+        setTimeout(checkLoaded, 5000);
+      }
+    }
+    setTimeout(checkLoaded, 5000);
+
+    var head = $("#iframe").contents().find("head");
+    var css = '<style type="text/css">' +
+              '.ndfHFb-c4YZDc-Wrql6b{display:none}; ' +
+              '</style>';
+    $(head).append(css);
+
+		$('body').on('click','.at4-share-label', function() {
+	    	window.location.href='https://cumulusnetworks.com/documents/99/Cumulus-Networks-Linux-for-Networking-Cheat-Sheet.pdf';	
+	    });
+    
+	});
+</script><script src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/addthis_widget.js"></script>
+
+
+        
+            
+        
+
+  
+
+<div id="drift-widget-container" style="position: absolute; z-index: 2147483647;"><iframe id="drift-widget" src="Linux%20networking%20commands%20cheat%20sheet%20%20%20Cumulus%20Networks_files/index.html" style="border: medium none; display: block; height: 99.2px !important; width: 456px !important; position: fixed; top: auto; left: auto; bottom: 24px; right: 24px; visibility: visible; z-index: 2147483647; max-height: 100vh; max-width: 100%; transition: none 0s ease 0s; background: transparent none repeat scroll 0% 0%; opacity: 1;" title="Drift Messenger" role="complementary" class="drift-widget-slider"></iframe></div></body></html>

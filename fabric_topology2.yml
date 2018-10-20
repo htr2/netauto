@@ -1,36 +1,40 @@
 ---
-- name: SP1
+- name: SW201
   box: CumulusCommunity/cumulus-vx 
   links:
-    - name: SP1LF1
-    - name: SP1LF2
+    - name: 201-101
+    - name: 201-102
   forwarded_ports:
     - { guest: 22, host: 20201 }
     - { guest: 443, host: 21201 }
+  mgmt_ip: 192.168.56.201
 
-- name: SP2
+- name: SW202
   box: CumulusCommunity/cumulus-vx
   links:
-    - name: SP2LF1
-    - name: SP2LF2
+    - name: 202-101
+    - name: 202-102
   forwarded_ports:
     - { guest: 22, host: 20202 }
     - { guest: 443, host: 21202 }
+  mgmt_ip: 192.168.56.201 
 
-- name: LF1
+- name: SW101
   box: CumulusCommunity/cumulus-vx
   links:
-    - name: SP1LF1
-    - name: SP2LF1
+    - name: 201-101
+    - name: 202-101
   forwarded_ports:
     - { guest: 22, host: 20101 }
     - { guest: 443, host: 21101 } 
+  mgmt_ip: 192.168.56.201
 
-- name: LF2
+- name: SW102
   box: CumulusCommunity/cumulus-vx
   links:
-    - name: SP1LF2
-    - name: SP2LF2
+    - name: 201-102
+    - name: 202-102
   forwarded_ports:
     - { guest: 22, host: 20102 }
     - { guest: 443, host: 21102 }
+  mgmt_ip: 192.168.56.201 
