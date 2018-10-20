@@ -47,34 +47,48 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vbguest.auto_update = false	
   
-  #fabric definition (using external yaml file) -> read YAML file 
+  #use external yaml file to create hosts 
   vagrant_root = File.dirname(__FILE__)
-  hosts = YAML.load_file(vagrant_root + '/fabric_topology.yml')
+  hosts = YAML.load_file(vagrant_root + '/vagrant_topology.yml')
 
 	hosts.each do |host|
-		config.vm.define host["name"] do |machine|
-			machine.vm.box = host["box"]
-			machine.vm.hostname = host["name"]
-			
+	
+		config.vm.define host["name"] do |node|
+			node.vm.box = host["box"]
+			node.vm.hostname = host["name"]
+
+			#use yaml defined nat
 			if host.key?("forwarded_ports")
 				host["forwarded_ports"].each do |port|
-					machine.vm.network :forwarded_port, guest: port["guest"], host: port["host"]
+					node.vm.network :forwarded_port, guest: port["guest"], host: port["host"], auto_correct: true
 				end
 			end
-			
-			if host.key?("script")
-				machine.vm.provision "shell", path: host["script"]
-			end
 
+			#use yaml link details to create links between nodes
 			if host.key?("links")
 				host["links"].each do |link|
-					machine.vm.network "private_network", virtualbox__intnet: link["name"], auto_config: false
+					node.vm.network "private_network", virtualbox__intnet: link["name"], auto_config: false
 				end
 			end
 
+			File.open("ansible_inventory" ,'a') do |f|
+				f.write "#{host["name"]} ansible_host=10.0.2.2 ansible_port=#{host["forwarded_ports"]["host"]} \n"
+				#http://www.korenlc.com/nested-arrays-hashes-loops-in-ruby/
+		  	end
+
+			#spine-1 ansible_host=10.0.2.2 ansible_port=20001 api_port=21001 os=eos ansible_user=admin ansible_ssh_pass=admin
+
+			###provisioners		
+			if host.key?("script")
+				node.vm.provision "shell", path: host["script"]
+			end
+
+			#does not work on windows...
+			#call noop ansible playbook to get auto created ansible inventory 
+			#node.vm.provision "ansible" do |ansible|
+			#	ansible.playbook = "playbook.yml"
+			#end
 
 		end
-
 	end
-
 end
