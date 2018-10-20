@@ -5,68 +5,70 @@
 Vagrant.require_version ">= 1.6.0"
 VAGRANTFILE_API_VERSION = "2"
  
+# Require Plugins
+required_plugins = %w(vagrant-vbguest vagrant-host-shell)
+
+##### START Helper functions
+def install_ssh_key()
+  puts "Adding ssh key to the ssh agent"
+  puts "ssh-add #{Vagrant.source_root}/keys/vagrant"
+  system "ssh-add #{Vagrant.source_root}/keys/vagrant"
+end
+
+def install_plugins(required_plugins)
+  plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
+  if not plugins_to_install.empty?
+    puts "Installing plugins: #{plugins_to_install.join(' ')}"
+    if system "vagrant plugin install #{plugins_to_install.join(' ')}"
+      exec "vagrant #{ARGV.join(' ')}"
+    else
+      abort "Installation of one or more plugins has failed. Aborting."
+    end
+  end
+end
+##### END Helper functions
+
+# Install ssh key
+# 
+# Uncomment the next line if you're using ssh-agent
+# install_ssh_key
+
+# Check certain plugins are installed
+install_plugins required_plugins
+
 # Require YAML module
 require 'yaml'
 
-# mgmt station shell script to install desired sw 
-$script1 = <<-SCRIPT
-sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-sudo yum -y install code
-sudo yum -y groupinstall development
 
-sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
-sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-sudo yum -y install xrdp tigervnc-server
-sudo systemctl start xrdp
-sudo systemctl  enable xrdp
+################################################################################
+#main
+################################################################################
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-sudo yum -y install python36u
-sudo yum -y install python36u-pip
-sudo yum -y install python36u-devel
-
-mkdir pve
-python3.6 -m venv pve
-source pve/bin/activate
-
-sudo python3.6 -m pip install --upgrade pip
-sudo python3.6 -m  pip install netmiko
-sudo python3.6 -m  pip install ansible
-sudo python3.6 -m  pip install napalm
-SCRIPT
-
-#mgmt station definition
-Vagrant.configure("2") do |config|
-  config.vm.define "mgmt" do |mgmt|
-	mgmt.vm.box = "centos/7"
-	mgmt.vm.hostname = "mgmt"
-	mgmt.vm.network :forwarded_port, guest: 22, host: 20001
-	mgmt.vm.network :forwarded_port, guest: 443, host: 20002
-	mgmt.vm.network :forwarded_port, guest: 3389, host: 20003
-	mgmt.vm.network :private_network, ip: "192.168.56.10"
-	mgmt.vm.provision "shell", inline: $script1
-  end
-
-  #fabric definition (using external yaml file)
- 
-  # Read YAML file 
+  config.vbguest.auto_update = false	
+  
+  #fabric definition (using external yaml file) -> read YAML file 
   vagrant_root = File.dirname(__FILE__)
-  hosts = YAML.load_file(vagrant_root + '/fabric_topology2.yml')
+  hosts = YAML.load_file(vagrant_root + '/fabric_topology.yml')
 
 	hosts.each do |host|
-		config.vm.define host["name"] do |sw|
-			sw.vm.box = host["box"]
-			sw.vm.hostname = host["name"]
-			sw.vm.network :private_network, ip: host["mgmt_ip"]
+		config.vm.define host["name"] do |machine|
+			machine.vm.box = host["box"]
+			machine.vm.hostname = host["name"]
+			
 			if host.key?("forwarded_ports")
 				host["forwarded_ports"].each do |port|
-					sw.vm.network :forwarded_port, guest: port["guest"], host: port["host"]
+					machine.vm.network :forwarded_port, guest: port["guest"], host: port["host"]
 				end
+			end
+			
+			if host.key?("script")
+				machine.vm.provision "shell", path: host["script"]
 			end
 
 			if host.key?("links")
 				host["links"].each do |link|
-					sw.vm.network "private_network", virtualbox__intnet: link["name"], auto_config: false
+					machine.vm.network "private_network", virtualbox__intnet: link["name"], auto_config: false
 				end
 			end
 
