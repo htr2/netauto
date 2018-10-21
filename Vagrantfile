@@ -5,16 +5,18 @@
 # Specify minimum Vagrant version and Vagrant API version
 Vagrant.require_version ">= 1.6.0"
 VAGRANTFILE_API_VERSION = "2"
+
  
 # Require Plugins
 required_plugins = %w(vagrant-vbguest vagrant-host-shell)
 
 ##### START Helper functions
-def install_ssh_key()
-  puts "Adding ssh key to the ssh agent"
-  puts "ssh-add #{Vagrant.source_root}/keys/vagrant"
-  system "ssh-add #{Vagrant.source_root}/keys/vagrant"
-end
+#def install_ssh_key()
+#  puts "Adding ssh key to the ssh agent"
+#  puts "ssh-add .vagrant\machines\#{host["name"]}\virtualbox\private_key"
+#	system "ssh-add .vagrant\machines\#{host["name"]}\virtualbox\private_key"
+#	system ""
+#end
 
 def install_plugins(required_plugins)
   plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
@@ -32,7 +34,7 @@ end
 # Install ssh key
 # 
 # Uncomment the next line if you're using ssh-agent, start ssh-agent service on windows10
-install_ssh_key
+#install_ssh_key
 #https://devops.stackexchange.com/questions/1237/how-do-i-configure-ssh-keys-in-a-vagrant-multi-machine-setup
 #https://www.phase2technology.com/blog/running-ssh-agent-vagrant
 #https://www.vagrantup.com/docs/synced-folders/basic_usage.html
@@ -50,7 +52,9 @@ require 'yaml'
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vbguest.auto_update = false	
-  config.ssh.forward_agent = true
+	config.ssh.forward_agent = true
+	config.winssh.forward_agent = true
+	#config.ssh.private_key_path = "C\:\\Users\\hv\\.ssh\\id_rsa" #%USERPROFILE% 
   
   #use external yaml file to create hosts 
   vagrant_root = File.dirname(__FILE__)
