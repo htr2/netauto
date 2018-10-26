@@ -1,50 +1,16 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 #https://github.com/ipspace/NetOpsWorkshop/blob/master/topologies/EOS-Leaf-and-Spine/Vagrantfile
+# vagrant 2.2.0
+# virtualbox 5.2.20
+# Windows 10 Enterprise version 1709 build 16299.726
 
 # Specify minimum Vagrant version and Vagrant API version
 Vagrant.require_version ">= 1.6.0"
 VAGRANTFILE_API_VERSION = "2"
 
- 
-# Require Plugins
-required_plugins = %w(vagrant-vbguest vagrant-host-shell)
-
-##### START Helper functions
-#def install_ssh_key()
-#  puts "Adding ssh key to the ssh agent"
-#  puts "ssh-add .vagrant\machines\#{host["name"]}\virtualbox\private_key"
-#	system "ssh-add .vagrant\machines\#{host["name"]}\virtualbox\private_key"
-#	system ""
-#end
-
-def install_plugins(required_plugins)
-  plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
-  if not plugins_to_install.empty?
-    puts "Installing plugins: #{plugins_to_install.join(' ')}"
-    if system "vagrant plugin install #{plugins_to_install.join(' ')}"
-      exec "vagrant #{ARGV.join(' ')}"
-    else
-      abort "Installation of one or more plugins has failed. Aborting."
-    end
-  end
-end
-##### END Helper functions
-
-# Install ssh key
-# 
-# Uncomment the next line if you're using ssh-agent, start ssh-agent service on windows10
-#install_ssh_key
-#https://devops.stackexchange.com/questions/1237/how-do-i-configure-ssh-keys-in-a-vagrant-multi-machine-setup
-#https://www.phase2technology.com/blog/running-ssh-agent-vagrant
-#https://www.vagrantup.com/docs/synced-folders/basic_usage.html
-
-# Check certain plugins are installed
-install_plugins required_plugins
-
-# Require YAML module
 require 'yaml'
-
+require 'vagrant-vbguest'
 
 ################################################################################
 #main
@@ -96,13 +62,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 				node.vm.provision "shell", path: host["script"]
 			end
 
-			if host.key?("copy")
-				#host["name"].each do |directory|
-					node.vm.synced_folder ".vagrant\\machines\\#{host["name"]}\\virtualbox\\", "/vagrant/SW1"
-					puts "copy files"
-				#end	
+			if host.key?("syncfolders")
+				host["syncfolders"].each do |syncfolder|
+					node.vm.synced_folder "#{syncfolder["source"]}", "#{syncfolder["destination"]}"
+				end	
 			end
 
 		end
 	end
 end
+
