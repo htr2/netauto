@@ -96,7 +96,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 				node.vm.provision "shell", path: host["script"]
 			end
 
-
+			if host.key?("copy")
+				#host["name"].each do |directory|
+					node.vm.synced_folder ".vagrant\\machines\\#{host["name"]}\\virtualbox\\", "/vagrant/SW1"
+					puts "copy files"
+				#end	
+			end
 
 		end
 	end
