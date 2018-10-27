@@ -11,8 +11,10 @@
   mgmt_ip: 192.168.56.10
   script: mgmt.sh
   syncfolders: 
-    - { source: "./.vagrant/machines/SW101/virtualbox/", destination: "/vagrant/SW101-2" }
-    - { source: "./.vagrant/machines/SW102/virtualbox/", destination: "/vagrant/SW102-2" }
+    - { source: "./.vagrant/machines/SW101/virtualbox/", destination: "/vagrant/SW101" }
+    - { source: "./.vagrant/machines/SW102/virtualbox/", destination: "/vagrant/SW102" }
+    - { source: "./.vagrant/machines/SW201/virtualbox/", destination: "/vagrant/SW201" }
+    - { source: "./.vagrant/machines/SW202/virtualbox/", destination: "/vagrant/SW202" }
 
 - name: SW201
   box: CumulusCommunity/cumulus-vx 
