@@ -1,2 +1,0 @@
-https://github.com/CumulusNetworks/cldemo-evpn-symmetric
-https://cumulusnetworks.com/blog/evpn-cumulus-linux-makes-cto-yell-booyah/
