@@ -16,7 +16,7 @@ require 'yaml'
 ################################################################################
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  required_plugins = ["vagrant-vbguest"]
+  required_plugins = ["vagrant-vbguest"] #["vagrant-vbguest", "other"]
   config.vagrant.plugins = required_plugins
 
   config.vbguest.auto_update = true	
@@ -52,7 +52,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			end
 
 			#use yaml defined folders to sync
+			puts "#############debug#######################"
 			if guest.key?("syncfolders")
+				puts "debug: entered syncfolders for #{guest["name"]}"
 				guest["syncfolders"].each do |syncfolder|
 					node.vm.synced_folder "#{syncfolder["source"]}", "#{syncfolder["destination"]}"
 				end	
