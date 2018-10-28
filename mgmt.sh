@@ -13,6 +13,9 @@ sudo systemctl  enable xrdp
 sudo yum -y install python36u
 sudo yum -y install python36u-pip
 sudo yum -y install python36u-devel
+sudo yum -y install sshpass
+sudo touch begin.sh
+sudo echo echo source pve/bin/activate >start.sh
 
 mkdir pve
 python3.6 -m venv pve

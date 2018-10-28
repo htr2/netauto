@@ -20,12 +20,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vagrant.plugins = required_plugins
 
   config.vbguest.auto_update = true	
-  config.ssh.forward_agent = true
-  config.winssh.forward_agent = true
+  config.ssh.forward_agent = false
+  config.winssh.forward_agent = false
   #config.ssh.private_key_path = "C\:\\Users\\hv\\.ssh\\id_rsa" #%USERPROFILE% 
   
-
-
   #use external yaml file to create guests 
   vagrant_root = File.dirname(__FILE__)
   guests = YAML.load_file(vagrant_root + '/vagrant_topology.yml')
@@ -36,7 +34,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			node.vm.box = guest["box"]
 			node.vm.hostname = guest["name"]
 			
-
 			#use yaml defined nat
 			if guest.key?("forwarded_ports")
 				guest["forwarded_ports"].each do |port|
@@ -52,24 +49,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			end
 
 			#use yaml defined folders to sync
-			puts "#############debug#######################"
 			if guest.key?("syncfolders")
-				puts "debug: entered syncfolders for #{guest["name"]}"
 				guest["syncfolders"].each do |syncfolder|
 					node.vm.synced_folder "#{syncfolder["source"]}", "#{syncfolder["destination"]}"
 				end	
 			end
 
-			File.open("ansible_inventory" ,'a') do |f|
-				f.write "#{guest["name"]} ansible_host=10.0.2.2 ansible_port=#{guest["forwarded_ports"][0]["host"]} api_port=#{guest["forwarded_ports"][1]["host"]} ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/#{guest["name"]}/virtualbox/private_key \n"
+			#log host to forwarded port details to be copied into ansible inventory
+			File.open("ansible_inventory_entry_log" ,'a') do |f|
+				f.write "#{guest["name"]} ansible_host=10.0.2.2 ansible_port=#{guest["forwarded_ports"][0]["host"]} api_port=#{guest["forwarded_ports"][1]["host"]} ansible_user=vagrant ansible_password=vagrant \n"
 		  	end
 
 			###provisioners
 
-			#does not work on windows...
+			#does not work well ...
 			#call noop ansible playbook to get auto created ansible inventory 
 			#node.vm.provision "ansible" do |ansible|
-			#	ansible.playbook = "playbook.yml"
+			#	ansible.playbook = "./sync/ansible_noop.yml"
 			#end
 
 			if guest.key?("script")
@@ -80,3 +76,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	end
 end
 
+#puts "debug output: message for #{guest["name"]}"

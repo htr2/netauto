@@ -1,0 +1,12 @@
+---
+- hosts: all
+  tasks:
+  - name: Fetch Status Of Interface
+    nclu:
+      commands:
+          - show interfaces
+    register: output
+  
+  - name: Print Status Of Interface
+    debug:
+      var: output
