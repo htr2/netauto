@@ -8,7 +8,6 @@
     - { guest: 22, host: 20010 }
     - { guest: 443, host: 21010 }
     - { guest: 3389, host: 22010 }
-  mgmt_ip: 192.168.56.10
   script: mgmt.sh
   syncfolders: 
     - { source: "./sync/", destination: "/home/vagrant/sync" }
@@ -21,7 +20,6 @@
   forwarded_ports:
     - { guest: 22, host: 20201 }
     - { guest: 443, host: 21201 }
-  mgmt_ip: 192.168.56.201
 
 - name: SW202
   box: CumulusCommunity/cumulus-vx
@@ -31,7 +29,6 @@
   forwarded_ports:
     - { guest: 22, host: 20202 }
     - { guest: 443, host: 21202 }
-  mgmt_ip: 192.168.56.202 
 
 - name: SW101
   box: CumulusCommunity/cumulus-vx
@@ -41,7 +38,6 @@
   forwarded_ports:
     - { guest: 22, host: 20101 }
     - { guest: 443, host: 21101 } 
-  mgmt_ip: 192.168.56.101
 
 - name: SW102
   box: CumulusCommunity/cumulus-vx
@@ -51,4 +47,3 @@
   forwarded_ports:
     - { guest: 22, host: 20102 }
     - { guest: 443, host: 21102 }
-  mgmt_ip: 192.168.56.102 
