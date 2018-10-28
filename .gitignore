@@ -15,4 +15,5 @@
 .vagrant/machines/switch/virtualbox/index_uuid
 .vagrant/machines/switch/virtualbox/private_key
 /read
-/.vagrant/
+/.vagrant
+/.vagrant s
