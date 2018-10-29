@@ -15,7 +15,8 @@ sudo yum -y install python36u-pip
 sudo yum -y install python36u-devel
 sudo yum -y install sshpass
 sudo touch begin.sh
-sudo echo echo source pve/bin/activate >start.sh
+sudo echo echo source pve/bin/activate >>start.sh
+sudo echo echo ansible-playbook -i /vagrant/sync/ansible/ansible_inventory /vagrant/sync/ansible/ansible_nclu_pull.yml >>start.sh
 
 mkdir pve
 python3.6 -m venv pve

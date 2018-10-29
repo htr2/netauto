@@ -1,0 +1,14 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Run show config commands
+      shell: 'net show config commands | grep net | grep -v "del all" > {{inventory_hostname}}_nclu'
+      # Explanation of  grep commands
+      # '| grep net' removes all non-net commands (e.g. comments)
+      # '| grep -v "del all"' removes the del all command from the beginning of the output, otherwise replay won't be idempotent
+      
+    - name: Fetch the file and store it locally
+      fetch: dest=backup/{{ansible_date_time.date}}@{{ansible_date_time.hour}}-{{ansible_date_time.minute}}/{{inventory_hostname}}_nclu src=/home/vagrant/{{inventory_hostname}}_nclu flat=yes
+      # This task grabs the output from the previous command and stores it as a flat-file locally on the machine running ansible
+     

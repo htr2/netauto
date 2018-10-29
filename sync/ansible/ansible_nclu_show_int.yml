@@ -4,7 +4,7 @@
   - name: Fetch Status Of Interface
     nclu:
       commands:
-          - show interfaces
+          - show interface
     register: output
   
   - name: Print Status Of Interface
