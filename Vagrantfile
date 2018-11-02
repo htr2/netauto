@@ -34,6 +34,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			node.vm.box = guest["box"]
 			node.vm.hostname = guest["name"]
 			
+			config.vm.provider "virtualbox" do |v|
+				v.name = guest["name"]
+			end
+	
+			if guest["box"]="centos/7"
+				config.vm.provider "virtualbox" do |w|
+					w.gui = true
+				end
+			end  
+
 			#use yaml defined nat
 			if guest.key?("forwarded_ports")
 				guest["forwarded_ports"].each do |port|

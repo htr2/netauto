@@ -1,1 +1,2 @@
 vagrant rsync
+sudo lsof -Pi | grep LISTEN
