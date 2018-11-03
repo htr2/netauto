@@ -34,12 +34,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			node.vm.box = guest["box"]
 			node.vm.hostname = guest["name"]
 			
-			config.vm.provider "virtualbox" do |v|
+			node.vm.provider "virtualbox" do |v|
 				v.name = guest["name"]
 			end
 	
+			#enable GUI on mgmt
 			if guest["box"]="centos/7"
-				config.vm.provider "virtualbox" do |w|
+				node.vm.provider "virtualbox" do |w|
 					w.gui = true
 				end
 			end  

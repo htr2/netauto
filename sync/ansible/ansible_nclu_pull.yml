@@ -9,6 +9,6 @@
       # '| grep -v "del all"' removes the del all command from the beginning of the output, otherwise replay won't be idempotent
       
     - name: Fetch the file and store it locally
-      fetch: dest=backup/{{ansible_date_time.date}}@{{ansible_date_time.hour}}-{{ansible_date_time.minute}}/{{inventory_hostname}}_nclu src=/home/vagrant/{{inventory_hostname}}_nclu flat=yes
+      fetch: dest=./../cumulus/backup/{{ansible_date_time.date}}@{{ansible_date_time.hour}}-{{ansible_date_time.minute}}/{{inventory_hostname}}_nclu src=/home/vagrant/{{inventory_hostname}}_nclu flat=yes
       # This task grabs the output from the previous command and stores it as a flat-file locally on the machine running ansible
      

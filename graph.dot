@@ -1,0 +1,14 @@
+graph g { 
+node [shape=record]; 
+graph [nodesep="2" ranksep="1"];
+
+"SW201" [label=" SW201 | <swp1> swp1 | <swp2> swp2 "];
+"SW202" [label=" SW202 | <swp1> swp1 | <swp2> swp2 "];
+"SW101" [label=" SW101 | <swp1> swp1 | <swp2> swp2 "];
+"SW102" [label=" SW102 | <swp1> swp1 | <swp2> swp2 "];
+
+"SW201":"swp1" -- "SW101":"swp1" [color="red"];
+"SW201":"swp2" -- "SW102":"swp1" [color="red"];
+"SW202":"swp1" -- "SW101":"swp2" [color="blue"]; 
+"SW202":"swp2" -- "SW102":"swp2" [color="blue"];
+}

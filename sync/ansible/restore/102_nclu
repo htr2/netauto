@@ -1,0 +1,22 @@
+net add routing log syslog
+net add loopback lo ip address 10.255.255.102/32
+net add dns nameserver ipv4 10.0.2.3
+net add interface swp1-2
+net add interface swp1-2 ipv6 nd suppress-ra
+net add interface swp1-2 ipv6 nd ra-interval 3
+net add time zone Etc/UTC
+net add time ntp source eth0
+net add time ntp server 4.cumulusnetworks.pool.ntp.org iburst
+net add bgp autonomous-system 65102
+net add bgp bestpath as-path multipath-relax
+net add bgp router-id 10.255.255.102
+net add bgp bestpath compare-routerid
+net add bgp neighbor fabric peer-group
+net add bgp neighbor fabric remote-as external
+net add bgp neighbor fabric description Internal Fabric Network
+net add bgp neighbor fabric capability extended-nexthop
+net add bgp neighbor swp1 interface peer-group fabric
+net add bgp neighbor swp2 interface peer-group fabric
+net add bgp ipv4 unicast redistribute connected
+net add hostname SW102
+net commit

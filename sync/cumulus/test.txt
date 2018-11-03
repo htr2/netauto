@@ -1,0 +1,2 @@
+start nclu with  source /etc/bash_completion
+sudo adduser vagrant netedit
