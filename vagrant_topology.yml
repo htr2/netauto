@@ -12,8 +12,8 @@
 - name: SW201
   box: CumulusCommunity/cumulus-vx 
   links:
-    - name: SW201:swp1-SW101:swp1
-    - name: SW201:swp2-SW102:swp2
+    - name: SW201:swp1 -- SW101:swp1
+    - name: SW201:swp2 -- SW102:swp1
   forwarded_ports:
     - { guest: 22, host: 20201 }
     - { guest: 443, host: 21201 }
@@ -21,8 +21,8 @@
 - name: SW202
   box: CumulusCommunity/cumulus-vx
   links:
-    - name: SW202:swp1-SW101:swp2
-    - name: SW202:swp2-SW102:swp2
+    - name: SW202:swp1 -- SW101:swp2
+    - name: SW202:swp2 -- SW102:swp2
   forwarded_ports:
     - { guest: 22, host: 20202 }
     - { guest: 443, host: 21202 }
@@ -30,8 +30,8 @@
 - name: SW101
   box: CumulusCommunity/cumulus-vx
   links:
-    - name: SW201:swp1-SW101:swp1
-    - name: SW202:swp1-SW101:swp2
+    - name: SW201:swp1 -- SW101:swp1
+    - name: SW202:swp1 -- SW101:swp2
   forwarded_ports:
     - { guest: 22, host: 20101 }
     - { guest: 443, host: 21101 } 
@@ -39,8 +39,8 @@
 - name: SW102
   box: CumulusCommunity/cumulus-vx
   links:
-    - name: SW201:swp2-SW102:swp2
-    - name: SW202:swp2-SW102:swp2
+    - name: SW201:swp2 -- SW102:swp2
+    - name: SW202:swp2 -- SW102:swp2
   forwarded_ports:
     - { guest: 22, host: 20102 }
     - { guest: 443, host: 21102 }

@@ -1,3 +1,7 @@
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+[all]
 SW201 ansible_host=10.0.2.2 ansible_port=20201 api_port=21201 ansible_user=vagrant ansible_password=vagrant 
 SW202 ansible_host=10.0.2.2 ansible_port=20202 api_port=21202 ansible_user=vagrant ansible_password=vagrant 
 SW101 ansible_host=10.0.2.2 ansible_port=20101 api_port=21101 ansible_user=vagrant ansible_password=vagrant 
