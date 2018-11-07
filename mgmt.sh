@@ -10,7 +10,8 @@ sudo yum -y install python36u-devel
 #helper tools
 sudo yum install -y lsof
 sudo yum install -y net-tools
-sudo yum -y install sshpass
+sudo yum install -y sshpass
+
 
 #RDP Desktop --does not work ----
 #sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
@@ -31,9 +32,8 @@ sudo systemctl set-default graphical.target
 sudo yum -y install graphviz
 
 #hints 
-sudo touch begin.sh
 sudo echo source pve/bin/activate >>start.sh
-sudo echo ansible-playbook -i /vagrant/sync/ansible/ansible_inventory /vagrant/sync/ansible/ansible_nclu_pull.yml >>start.sh
+sudo echo ansible-playbook -i /vagrant/sync/ansible/ansible_inventory /vagrant/sync/ansible/playbooks/ansible_nclu_pull.yml >>start.sh
 
 #Python Virtual Environment with Ansible Napalm etc
 mkdir pve

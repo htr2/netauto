@@ -1,11 +1,14 @@
-graph g { node [shape=record]; 
-MGMT [label=" MGMT | <swp1> swp1 | <swp2> swp2 "];
+graph g {
+ node [shape=record];
+ graph [nodesep="2" ranksep="1"];
+ BFD="upMinTx=150,requiredMinRx=250,afi=both" 
+ LLDP="" 
 SW201:swp1 -- SW101:swp1
 SW201:swp2 -- SW102:swp1
-SW201 [label=" SW201 | <swp1> swp1 | <swp2> swp2 "];
+SW201 [label=" SW201| <swp1> swp1| <swp2> swp2| <swp3> swp3| <swp4> swp4| <swp5> swp5| <swp6> swp6"];
 SW202:swp1 -- SW101:swp2
 SW202:swp2 -- SW102:swp2
-SW202 [label=" SW202 | <swp1> swp1 | <swp2> swp2 "];
-SW101 [label=" SW101 | <swp1> swp1 | <swp2> swp2 "];
-SW102 [label=" SW102 | <swp1> swp1 | <swp2> swp2 "];
+SW202 [label=" SW202| <swp1> swp1| <swp2> swp2| <swp3> swp3| <swp4> swp4| <swp5> swp5| <swp6> swp6"];
+SW101 [label=" SW101| <swp1> swp1| <swp2> swp2| <swp3> swp3| <swp4> swp4| <swp5> swp5| <swp6> swp6"];
+SW102 [label=" SW102| <swp1> swp1| <swp2> swp2| <swp3> swp3| <swp4> swp4| <swp5> swp5| <swp6> swp6"];
 }

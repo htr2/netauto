@@ -17,10 +17,12 @@ require 'fileutils'
 ################################################################################
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  required_plugins = ["vagrant-vbguest"] #["vagrant-vbguest", "other"]
+  required_plugins = ["vagrant-vbguest", "vagrant-cachier", "vagrant-winnfsd"] #["vagrant-vbguest", "other"]
   config.vagrant.plugins = required_plugins
 
+  config.cache.scope = :machine #to have different buckets for our multi machine
   config.vbguest.auto_update = true	
+  config.vbguest.auto_reboot = true 
   config.ssh.forward_agent = false
   config.winssh.forward_agent = false
  
@@ -28,9 +30,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   guests = YAML.load_file(vagrant_root + '/vagrant_topology.yml')
   file1 = File.open(vagrant_root + "/sync/ansible/ansible_inventory" ,'w')
   file2 = File.open(vagrant_root + "/sync/cumulus/topology.dot" ,'w')
-  file2.puts("graph g { node [shape=record]; ")
+  file2.puts("graph g {\n node [shape=record];\n graph [nodesep=\"2\" ranksep=\"1\"];\n BFD=\"upMinTx=150,requiredMinRx=250,afi=both\" \n LLDP=\"\" ")
 
-  $spine_counter=0
+
   
 	guests.each do |guest|
 		
@@ -40,18 +42,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		end
 
 		#create graphviz topology file used for cumulus prescriptive topology manager from vagrant topology
-		#using spines link names only to avoid duplicates, number of spines also indicates required number of ports per switch
-		if guest["name"].include? "SW2"
-			$spine_counter += 1
-			if guest.key?("links")
-				guest["links"].each do |link|
-					file2.puts( link["name"] )
+		if guest["name"].include? "SW"		
+			#using spines names (ie SW2xx) only to avoid duplicates
+			if guest["name"].include? "SW2"
+				if guest.key?("links")
+					guest["links"].each do |link|
+						file2.puts( link["name"] )
+					end
 				end
 			end
+			#creating ports
+			s = "#{guest["name"]} [label=\" #{guest["name"]}"
+			for i in 1..guest["switch_ports"]
+				s = s + "| <swp#{i}> swp#{i}"
+			end
+			s = s + "\"];"
+			file2.puts(s)
 		end
-		puts("debug fix fixed number of port based on number of spines: #$spine_counter") 
-		file2.puts("#{guest["name"]} [label=\" #{guest["name"]} | <swp1> swp1 | <swp2> swp2 \"];")
-
 
 
 		config.vm.define guest["name"] do |node|
@@ -62,11 +69,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 				v.name = guest["name"]
 			end
 	
-			#enable GUI on mgmt
+			#enable GUI for centos devices
 			if guest["box"]="centos/7"
 				node.vm.provider "virtualbox" do |w|
 					w.gui = true
 				end
+				node.vm.network "private_network", :type => 'dhcp', :adapter => 2
 			end  
 
 			#vagrant topology defined nat
@@ -86,7 +94,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			#vagrant topology defined folders to sync
 			if guest.key?("syncfolders")
 				guest["syncfolders"].each do |syncfolder|
-					node.vm.synced_folder "#{syncfolder["source"]}", "#{syncfolder["destination"]}"
+					node.vm.synced_folder "#{syncfolder["source"]}", "#{syncfolder["destination"]}", type: "nfs"
 				end	
 			end
 
@@ -95,7 +103,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			#does not work well ...
 			#call noop ansible playbook to get auto created ansible inventory 
 			#node.vm.provision "ansible" do |ansible|
-			#	ansible.playbook = "./sync/ansible_noop.yml"
+			#	ansible.playbook = "./sync/.../ansible_noop.yml"
 			#end
 
 			#provision MGMT

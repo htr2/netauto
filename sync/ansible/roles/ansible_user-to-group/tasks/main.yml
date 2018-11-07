@@ -1,0 +1,7 @@
+  - name: adding existing user '{{ user }}' to group
+    user:
+      name: "{{ user }}"
+      groups:
+        - sudo
+        - netedit
+    append: yes

@@ -10,7 +10,8 @@
     - { source: "./sync/", destination: "/home/vagrant/sync" }
 
 - name: SW201
-  box: CumulusCommunity/cumulus-vx 
+  box: CumulusCommunity/cumulus-vx
+  switch_ports: 6 
   links:
     - name: SW201:swp1 -- SW101:swp1
     - name: SW201:swp2 -- SW102:swp1
@@ -20,6 +21,7 @@
 
 - name: SW202
   box: CumulusCommunity/cumulus-vx
+  switch_ports: 6
   links:
     - name: SW202:swp1 -- SW101:swp2
     - name: SW202:swp2 -- SW102:swp2
@@ -29,6 +31,7 @@
 
 - name: SW101
   box: CumulusCommunity/cumulus-vx
+  switch_ports: 6
   links:
     - name: SW201:swp1 -- SW101:swp1
     - name: SW202:swp1 -- SW101:swp2
@@ -38,6 +41,7 @@
 
 - name: SW102
   box: CumulusCommunity/cumulus-vx
+  switch_ports: 6
   links:
     - name: SW201:swp2 -- SW102:swp2
     - name: SW202:swp2 -- SW102:swp2

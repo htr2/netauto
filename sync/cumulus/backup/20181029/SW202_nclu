@@ -17,6 +17,8 @@ net add bgp neighbor fabric description Internal Fabric Network
 net add bgp neighbor fabric capability extended-nexthop
 net add bgp neighbor swp1 interface peer-group fabric
 net add bgp neighbor swp2 interface peer-group fabric
+net add bgp neighbor swp1 bfd
+net add bgp neighbor swp2 bfd
 net add bgp ipv4 unicast redistribute connected
 net add hostname SW202
 net commit
