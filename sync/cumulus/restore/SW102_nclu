@@ -21,4 +21,6 @@ net add bgp neighbor swp1 bfd
 net add bgp neighbor swp2 bfd
 net add bgp ipv4 unicast redistribute connected
 net add hostname SW102
+net add snmp-server readonly-community snmpPW access any
+net add snmp-server listening-address all
 net commit

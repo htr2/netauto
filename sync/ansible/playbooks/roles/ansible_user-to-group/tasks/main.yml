@@ -1,8 +1,7 @@
 ---
-- name: adding existing user to group
+- name: adding existing user to group 
   user:
-      name: vagrant
-      groups:
-        - sudo
-        - netedit
-      append: yes
+    name: "{{vagrant_user}}"
+    groups: "{{cumulus_group}}"
+    append: yes
+    state: present

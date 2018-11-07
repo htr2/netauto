@@ -116,6 +116,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	file1.close
 	file2.puts("}")
 	file2.close
+	system "ssh-keygen -y -f .vagrant/machines/MGMT/virtualbox/private_key > sync/id_rsa"
 end
 
 #puts "debug output: message for #{guest["name"]}"

@@ -13,4 +13,4 @@
     - name: commit the changes
       nclu:
         commit: yes
-# we commit in a separate stanza so we don't have to "per line" in the stanza above  
+      # we commit once here so we don't have to "per line" in the stanza above  

@@ -18,3 +18,5 @@
 /.vagrant
 /.vagrant s
 /read - Shortcut.lnk
+/.ssh
+/sync/id_rsa

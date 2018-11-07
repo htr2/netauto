@@ -1,0 +1,10 @@
+---
+- snmp_facts:
+    host: all
+    version: v2c
+    community: snmpPW
+  delegate_to: localhost
+
+
+#- name: Generate links
+#  template: src={{template|default('links.j2')}} dest=./{{output|default('links.txt')}}

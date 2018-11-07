@@ -11,6 +11,7 @@ sudo yum -y install python36u-devel
 sudo yum install -y lsof
 sudo yum install -y net-tools
 sudo yum install -y sshpass
+sudo yum install -y pysnmp
 
 
 #RDP Desktop --does not work ----
@@ -44,5 +45,6 @@ sudo python3.6 -m pip install --upgrade pip
 sudo python3.6 -m  pip install netmiko
 sudo python3.6 -m  pip install ansible
 sudo python3.6 -m  pip install napalm
+sudo python3.6 -m  pip install pysnmp
 
 sudo shutdown -r now

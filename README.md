@@ -1,6 +1,10 @@
 # netauto
 
-builds a management server and a leaf and spine switch fabric
+(ab)uses vagrant to 
+    build a management server and a leaf and spine switch fabric
+    create ansible_inventory, graphviz topology.dot
+has baseline switch config, ansible playbooks for cfg backup/restore, cumulus ptm
+
 
 guests:
 MGMT, management server based on centos7 with ansible etc
