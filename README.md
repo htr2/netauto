@@ -1,9 +1,9 @@
 # netauto
 
 (ab)uses vagrant to 
-    build a management server and a leaf and spine switch fabric
-    create ansible_inventory, graphviz topology.dot
-has baseline switch config, ansible playbooks for cfg backup/restore, cumulus ptm
+    -build a management server and a leaf and spine switch fabric
+    -create ansible_inventory, graphviz topology.dot
+it also has a baseline switch config, ansible playbooks for cfg backup/restore, cumulus ptm etc
 
 
 guests:

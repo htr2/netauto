@@ -25,13 +25,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vbguest.auto_reboot = true 
   config.ssh.forward_agent = false
   config.winssh.forward_agent = false
+  config.winnfsd.logging = "on"
+  config.winnfsd.uid = 1
+  config.winnfsd.gid = 1
  
+  #to enable nfs sharing we should just need the winnfsd plugin, however i seem to need the service on host too (https://github.com/winnfsd/winnfsd/releases) 
+  system "start nfsshare/WinNFSd.exe . /export"
+  #can be manually be mounted / unmounted from linux guests with 
+  #sudo mount -o 'vers=3,nolock,udp' -t nfs <your_guest_ip-private_net>:/export /mnt/nfs
+  #sudo umount /mnt/nfs
+
   vagrant_root = File.dirname(__FILE__)
   guests = YAML.load_file(vagrant_root + '/vagrant_topology.yml')
   file1 = File.open(vagrant_root + "/sync/ansible/ansible_inventory" ,'w')
   file2 = File.open(vagrant_root + "/sync/cumulus/topology.dot" ,'w')
   file2.puts("graph g {\n node [shape=record];\n graph [nodesep=\"2\" ranksep=\"1\"];\n BFD=\"upMinTx=150,requiredMinRx=250,afi=both\" \n LLDP=\"\" ")
-
+  
 
   
 	guests.each do |guest|
@@ -74,7 +83,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 				node.vm.provider "virtualbox" do |w|
 					w.gui = true
 				end
-				node.vm.network "private_network", :type => 'dhcp', :adapter => 2
+				node.vm.network "private_network", type: 'dhcp', name: "vboxnet0", adapter: "2"
 			end  
 
 			#vagrant topology defined nat
@@ -86,6 +95,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 			#vagrant topology defined link details to create links between nodes
 			if guest.key?("links")
+				puts "debug output: message for #{guest["name"]}"
 				guest["links"].each do |link|
 					node.vm.network "private_network", virtualbox__intnet: link["name"], auto_config: false
 				end
@@ -94,7 +104,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			#vagrant topology defined folders to sync
 			if guest.key?("syncfolders")
 				guest["syncfolders"].each do |syncfolder|
-					node.vm.synced_folder "#{syncfolder["source"]}", "#{syncfolder["destination"]}", type: "nfs"
+					node.vm.synced_folder "#{syncfolder["source"]}", "#{syncfolder["destination"]}", type: "nfs", mount_options: ["dmode=775,fmode=777","rw","vers=3","udp","nolock"]
 				end	
 			end
 
