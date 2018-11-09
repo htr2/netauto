@@ -12,6 +12,13 @@ VAGRANTFILE_API_VERSION = "2"
 require 'yaml'
 require 'fileutils'
 
+#attempt to fix DHCP error when specifying vboxnetwork for MGMT 
+class VagrantPlugins::ProviderVirtualBox::Action::Network
+	def dhcp_server_matches_config?(dhcp_server, config)
+	  true
+	end
+end
+
 ################################################################################
 #main
 ################################################################################
@@ -83,7 +90,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 				node.vm.provider "virtualbox" do |w|
 					w.gui = true
 				end
-				node.vm.network "private_network", type: 'dhcp', name: "vboxnet0", adapter: "2"
+				node.vm.network "private_network", type: 'dhcp'#, name: "VirtualBox Host-Only Ethernet Adapter #2", adapter: "2"
 			end  
 
 			#vagrant topology defined nat
@@ -95,7 +102,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 			#vagrant topology defined link details to create links between nodes
 			if guest.key?("links")
-				puts "debug output: message for #{guest["name"]}"
 				guest["links"].each do |link|
 					node.vm.network "private_network", virtualbox__intnet: link["name"], auto_config: false
 				end
@@ -126,7 +132,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	file1.close
 	file2.puts("}")
 	file2.close
-	system "ssh-keygen -y -f .vagrant/machines/MGMT/virtualbox/private_key > sync/id_rsa"
+	#system "ssh-keygen -y -f .vagrant/machines/MGMT/virtualbox/private_key > sync/id_rsa"
 end
 
 #puts "debug output: message for #{guest["name"]}"
