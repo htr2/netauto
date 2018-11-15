@@ -36,8 +36,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.winnfsd.uid = 1
   config.winnfsd.gid = 1
  
-  #to enable nfs sharing we should just need the winnfsd plugin, however i seem to need the service on host too (https://github.com/winnfsd/winnfsd/releases) 
-  system "start nfsshare/WinNFSd.exe . /export"
+  #to enable nfs sharing this uses the winnfsd plugin (https://github.com/winnfsd/winnfsd/releases). 
+  #however as it seems unreliable the 'manual' option is to uncomment the next line (and comment the plugin to prevent conflict)
+  #system "start nfsshare/WinNFSd.exe . /export"
   #can be manually be mounted / unmounted from linux guests with 
   #sudo mount -o 'vers=3,nolock,udp' -t nfs <your_guest_ip-private_net>:/export /mnt/nfs
   #sudo umount /mnt/nfs
@@ -90,7 +91,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 				node.vm.provider "virtualbox" do |w|
 					w.gui = true
 				end
-				node.vm.network "private_network", type: 'dhcp'#, name: "VirtualBox Host-Only Ethernet Adapter #2", adapter: "2"
+				node.vm.network "private_network", type: 'dhcp'
+				#specifying the adapter with <,name: "VirtualBox Host-Only Ethernet Adapter #2", adapter: "2"> seems to break connectivity 
 			end  
 
 			#vagrant topology defined nat
@@ -110,7 +112,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 			#vagrant topology defined folders to sync
 			if guest.key?("syncfolders")
 				guest["syncfolders"].each do |syncfolder|
-					node.vm.synced_folder "#{syncfolder["source"]}", "#{syncfolder["destination"]}", type: "nfs", mount_options: ["dmode=775,fmode=777","rw","vers=3","udp","nolock"]
+					node.vm.synced_folder "#{syncfolder["source"]}", "#{syncfolder["destination"]}", type: "nfs", mount_options: ["nolock","vers=3","udp","actimeo=1"]
 				end	
 			end
 
@@ -132,7 +134,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	file1.close
 	file2.puts("}")
 	file2.close
-	#system "ssh-keygen -y -f .vagrant/machines/MGMT/virtualbox/private_key > sync/id_rsa"
+	system "ssh-keygen -y -f .vagrant/machines/MGMT/virtualbox/private_key > sync/id_rsa"
 end
-
+#debug template:
 #puts "debug output: message for #{guest["name"]}"
+puts "if vagrant up fails to mount ssh, re run vagrant reload"
