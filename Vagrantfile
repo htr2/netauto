@@ -46,6 +46,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   vagrant_root = File.dirname(__FILE__)
   guests = YAML.load_file(vagrant_root + '/vagrant_topology.yml')
   file1 = File.open(vagrant_root + "/sync/ansible/ansible_inventory" ,'w')
+  file1.puts("[all:vars] \nansible_ssh_common_args='-o StrictHostKeyChecking=no' \n[all]")
   file2 = File.open(vagrant_root + "/sync/cumulus/topology.dot" ,'w')
   file2.puts("graph g {\n node [shape=record];\n graph [nodesep=\"2\" ranksep=\"1\"];\n BFD=\"upMinTx=150,requiredMinRx=250,afi=both\" \n LLDP=\"\" ")
   

@@ -13,9 +13,10 @@
     - name: Fetch the file and store it locally
       fetch: 
         src: /home/vagrant/{{inventory_hostname}}_nclu 
-        dest: /vagrant/sync/cumulus/backup/{{ansible_date_time.date}}@{{ansible_date_time.hour}}-{{ansible_date_time.minute}}/{{inventory_hostname}}_nclu 
+        dest: /tmp/
+        #dest: /home/vagrant/sync/cumulus/backup/{{ansible_date_time.date}}@{{ansible_date_time.hour}}-{{ansible_date_time.minute}}/{{inventory_hostname}}_nclu 
         flat: yes
-        # This task grabs the output file from the previous command and stores it as a flat-file locally on the machine running ansible
+        # This task grabs the output file from the previous command and stores it locally on the machine running ansible
 
     - debug:
-        msg: "backed up to /vagrant/sync/cumulus/backup/{{ansible_date_time.date}}@{{ansible_date_time.hour}}-{{ansible_date_time.minute}}/{{inventory_hostname}}_nclu"
+        msg: "backed up to /home/vagrant/sync/cumulus/backup/{{ansible_date_time.date}}@{{ansible_date_time.hour}}-{{ansible_date_time.minute}}/{{inventory_hostname}}_nclu"

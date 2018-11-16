@@ -34,7 +34,7 @@ sudo yum -y install graphviz
 
 #hints 
 sudo echo source pve/bin/activate >>start.sh
-sudo echo ansible-playbook -i /vagrant/sync/ansible/ansible_inventory /vagrant/sync/ansible/playbooks/ansible_nclu_pull.yml >>start.sh
+sudo echo ansible-playbook -i /home/vagrant/sync/ansible/ansible_inventory /home/vagrant/sync/ansible/playbooks/ansible_nclu_pull.yml >>start.sh
 
 #Python Virtual Environment with Ansible Napalm etc
 mkdir pve
