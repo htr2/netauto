@@ -54,13 +54,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
 	guests.each do |guest|
 		
+		#####switches###############################################
 		#create ansible inventory for switches from vagrant topology
 		if guest["name"].include? "SW"
 			file1.puts("#{guest["name"]} ansible_host=10.0.2.2 ansible_port=#{guest["forwarded_ports"][0]["host"]} api_port=#{guest["forwarded_ports"][1]["host"]} ansible_user=vagrant ansible_password=vagrant \n")	
-		end
 
-		#create graphviz topology file used for cumulus prescriptive topology manager from vagrant topology
-		if guest["name"].include? "SW"		
+			#create graphviz topology file used for cumulus prescriptive topology manager from vagrant topology	
 			#using spines names (ie SW2xx) only to avoid duplicates
 			if guest["name"].include? "SW2"
 				if guest.key?("links")
@@ -69,67 +68,73 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 					end
 				end
 			end
-			#creating ports
+			#for the ports
 			s = "#{guest["name"]} [label=\" #{guest["name"]}"
 			for i in 1..guest["switch_ports"]
 				s = s + "| <swp#{i}> swp#{i}"
 			end
 			s = s + "\"];"
 			file2.puts(s)
+
+
+			config.vm.define guest["name"] do |switch|
+				switch.vm.box = guest["box"]
+				switch.vm.hostname = guest["name"]
+
+				switch.vm.provider "virtualbox" do |v|
+					v.name = guest["name"]
+				end
+
+				#vagrant topology defined nat
+				if guest.key?("forwarded_ports")
+					guest["forwarded_ports"].each do |port|
+						switch.vm.network :forwarded_port, guest: port["guest"], host: port["host"], auto_correct: true
+					end
+				end
+
+				#vagrant topology defined link details to create links between nodes
+				if guest.key?("links")
+					guest["links"].each do |link|
+						switch.vm.network "private_network", virtualbox__intnet: link["name"], auto_config: false
+					end
+				end
+			end
 		end
 
+		########MGMT###############################################
+		if guest["name"].include? "MGMT"
 
-		config.vm.define guest["name"] do |node|
-			node.vm.box = guest["box"]
-			node.vm.hostname = guest["name"]
-			
-			node.vm.provider "virtualbox" do |v|
-				v.name = guest["name"]
-			end
-	
-			#enable GUI for centos devices
-			if guest["box"]="centos/7"
-				node.vm.provider "virtualbox" do |w|
-					w.gui = true
+			config.vm.define guest["name"] do |mgmt|
+				mgmt.vm.box = guest["box"]
+				mgmt.vm.hostname = guest["name"]
+
+				mgmt.vm.provider "virtualbox" do |v1|
+					v1.name = guest["name"]
+					v1.gui = true
 				end
-				node.vm.network "private_network", type: 'dhcp'
+
+				mgmt.vm.network "private_network", type: 'dhcp'
 				#specifying the adapter with <,name: "VirtualBox Host-Only Ethernet Adapter #2", adapter: "2"> seems to break connectivity 
-			end  
+ 
+				#vagrant topology defined nat
+				if guest.key?("forwarded_ports")
+					guest["forwarded_ports"].each do |port|
+						mgmt.vm.network :forwarded_port, guest: port["guest"], host: port["host"], auto_correct: true
+					end
+				end
 
-			#vagrant topology defined nat
-			if guest.key?("forwarded_ports")
-				guest["forwarded_ports"].each do |port|
-					node.vm.network :forwarded_port, guest: port["guest"], host: port["host"], auto_correct: true
+				#vagrant topology defined folders to sync
+				if guest.key?("syncfolders")
+					guest["syncfolders"].each do |syncfolder|
+						mgmt.vm.synced_folder "#{syncfolder["source"]}", "#{syncfolder["destination"]}", type: "nfs", mount_options: ["nolock","vers=3","udp","actimeo=1"]
+					end	
+				end
+						
+				#provision MGMT
+				if guest.key?("script")
+					mgmt.vm.provision "shell", path: guest["script"]
 				end
 			end
-
-			#vagrant topology defined link details to create links between nodes
-			if guest.key?("links")
-				guest["links"].each do |link|
-					node.vm.network "private_network", virtualbox__intnet: link["name"], auto_config: false
-				end
-			end
-
-			#vagrant topology defined folders to sync
-			if guest.key?("syncfolders")
-				guest["syncfolders"].each do |syncfolder|
-					node.vm.synced_folder "#{syncfolder["source"]}", "#{syncfolder["destination"]}", type: "nfs", mount_options: ["nolock","vers=3","udp","actimeo=1"]
-				end	
-			end
-
-			###provisioners
-
-			#does not work well ...
-			#call noop ansible playbook to get auto created ansible inventory 
-			#node.vm.provision "ansible" do |ansible|
-			#	ansible.playbook = "./sync/.../ansible_noop.yml"
-			#end
-
-			#provision MGMT
-			if guest.key?("script")
-				node.vm.provision "shell", path: guest["script"]
-			end
-
 		end
 	end
 	file1.close
