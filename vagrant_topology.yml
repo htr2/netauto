@@ -7,7 +7,8 @@
     - { guest: 3389, host: 22010 }
   script: mgmt.sh
   syncfolders: 
-    - { source: "./sync/", destination: "/home/vagrant/sync" }
+    - { source: ".", destination: "/vagrant" }
+    #    - { source: "./sync/", destination: "/home/vagrant/sync" }
 
 - name: SW201
   box: CumulusCommunity/cumulus-vx

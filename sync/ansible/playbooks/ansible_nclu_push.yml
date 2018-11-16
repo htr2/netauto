@@ -3,7 +3,7 @@
   become: yes
   gather_facts: no
   tasks:
-    - name: run the net commands
+    - name: run the net commands from /vagrant/sync/cumulus/restore/
       nclu:
         commands:
           - '{{item[4:]}}'
