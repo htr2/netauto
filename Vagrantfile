@@ -138,4 +138,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 end
 #debug template:
 #puts "debug output: message for #{guest["name"]}"
-puts "if vagrant up fails to mount ssh, re run vagrant reload"
+puts "if vagrant up fails to mount (SWx0x vbox or MGMT nfs issue), run vagrant reload"
+#http://download.virtualbox.org/virtualbox/5.2.22/virtualbox-5.2_5.2.22-126460~Debian~jessie_amd64.deb
