@@ -1,0 +1,10 @@
+SW201swp2 - SW102swp1 ???
+
+
+SW102swp2 - SW202swp2 ok
+SW201swp1 - SW101swp1 ok
+
+102:
+SW201:swp2 -- SW102:swp2
+201:
+SW201:swp2 -- SW102:swp1

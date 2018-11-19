@@ -1,5 +1,5 @@
 ---
-- name: adding existing user to group 
+- name: adding user vagrant to cumulus netedit group 
   user:
     name: "{{vagrant_user}}"
     groups: "{{cumulus_group}}"

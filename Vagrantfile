@@ -28,8 +28,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vagrant.plugins = required_plugins
 
   config.cache.scope = :machine #to have different buckets for our multi machine
-  config.vbguest.auto_update = true	
-  config.vbguest.auto_reboot = true 
   config.ssh.forward_agent = false
   config.winssh.forward_agent = false
   config.winnfsd.logging = "on"
@@ -78,6 +76,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 
 			config.vm.define guest["name"] do |switch|
+				switch.vbguest.auto_update = false	
+				switch.vbguest.auto_reboot = false 
 				switch.vm.box = guest["box"]
 				switch.vm.hostname = guest["name"]
 
@@ -105,6 +105,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		if guest["name"].include? "MGMT"
 
 			config.vm.define guest["name"] do |mgmt|
+
+				mgmt.vbguest.auto_update = true	
+				mgmt.vbguest.auto_reboot = true 
 				mgmt.vm.box = guest["box"]
 				mgmt.vm.hostname = guest["name"]
 

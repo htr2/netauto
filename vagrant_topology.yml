@@ -44,7 +44,7 @@
   box: CumulusCommunity/cumulus-vx
   switch_ports: 6
   links:
-    - name: SW201:swp2 -- SW102:swp2
+    - name: SW201:swp2 -- SW102:swp1
     - name: SW202:swp2 -- SW102:swp2
   forwarded_ports:
     - { guest: 22, host: 20102 }
