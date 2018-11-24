@@ -1,7 +1,7 @@
 ---
 - hosts: all
   tasks:
-  - name: RestAPi Test - Show counters
+  - name: RestAPi Test - Show something
     uri: 
       url: https://10.0.2.2:21201/nclu/v1/rpc
       method: POST
@@ -9,7 +9,7 @@
       password: "vagrant"
       validate_certs: no
       return_content: yes
-      body: {"cmd": "show counters"}
+      body: {"cmd": "show lldp json"}
       body_format: json
       status_code: 200
     register: output
