@@ -1,16 +1,21 @@
 ---
 - hosts: all
-  become: yes
+  become: true
   gather_facts: no
   tasks:
-    - name: run the net commands from /vagrant/sync/cumulus/restore/
-      nclu:
-        commands:
-          - '{{item[4:]}}'
-      with_lines: cat /vagrant/sync/cumulus/restore/{{inventory_hostname}}_nclu
-      # with_lines loops through each line in the file, and item[4:] strips off the 'net' in front since its redundant with nclu ansible module
-    
-    - name: commit the changes
-      nclu:
-        commit: yes
-      # we commit once here so we don't have to "per line" in the stanza above  
+    roles:
+    - ansible_nclu_push
+
+
+    #- name: run the net commands from /vagrant/sync/cumulus/restore/
+    #  nclu:
+    #    commands:
+    #      - '{{item[4:]}}'
+    #  with_lines: cat /vagrant/sync/cumulus/restore/{{inventory_hostname}}_nclu
+    #  # with_lines loops through each line in the file, and item[4:] strips off the 'net' in front since its redundant with nclu ansible module
+    #
+    #- name: commit the changes
+    #  nclu:
+    #    commit: yes
+    #  # we commit once here so we don't have to "per line" in the stanza above  
+

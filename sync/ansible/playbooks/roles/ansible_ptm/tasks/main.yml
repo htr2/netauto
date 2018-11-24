@@ -1,0 +1,23 @@
+---
+- name: copy topology.dot
+  copy:
+    src: /vagrant/sync/cumulus/topology.dot
+    dest: /etc/ptm.d/topology.dot 
+  # copies topology file from vagrant sync directory to where ptm expects it
+  
+- name: start/restart ptm service
+  service:
+    name: ptmd
+    state: restarted
+  #shell: 'systemctl start ptmd.service
+
+- name: check ptmd 
+  command: ptmctl   
+  register: ptmctl_output
+
+- name: Print PTM output
+  debug:
+    var: ptmctl_output.stdout_lines
+
+#checks connectivity against topology.dot file with Prescriptive Topology Manager
+     

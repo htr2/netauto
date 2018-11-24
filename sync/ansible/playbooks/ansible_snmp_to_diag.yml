@@ -1,7 +1,0 @@
----
-- hosts: all
-  tasks:
-  gather_facts: yes
-  become: true
-  roles:
-    - ansible_snmp_to_diag

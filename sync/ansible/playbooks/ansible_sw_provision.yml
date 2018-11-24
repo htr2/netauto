@@ -1,0 +1,11 @@
+---
+- hosts: all
+  tasks:
+  gather_facts: yes
+  become: true
+  roles:
+    - ansible_nclu_pull
+    - ansible_user-to-group
+    - ansible_nclu_push
+    - ansible_ptm
+    - ansible_sw_restserver

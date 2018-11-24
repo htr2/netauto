@@ -1,0 +1,22 @@
+---
+- name: copy nginx-restapi-chassis.conf
+  copy:
+    src: /vagrant/sync/ansible/playbooks/roles/ansible_sw_restserver/vars/nginx-restapi-chassis.conf
+    dest: /etc/nginx/sites-available/nginx-restapi-chassis.conf 
+  # overwrites nginx conf file with pre-edited version from vagrant sync directory to where it is expected
+  
+- name: start/restart restserver service
+  service:
+    name: restserver
+    state: restarted
+  #shell: 'sudo systemctl restart restserver
+
+- name: check restserver 
+  command: systemctl status restserver   
+  register: status_output
+
+- name: Print Status output
+  debug:
+    var: status_output.stdout_lines
+
+     
