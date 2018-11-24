@@ -41,6 +41,8 @@ sudo echo #ansible-playbook -i /vagrant/sync/ansible/ansible_inventory /vagrant/
 sudo echo #ansible-playbook -i /vagrant/sync/ansible/ansible_inventory /vagrant/sync/ansible/playbooks/ansible_user-to-group.yml >>start.sh
 sudo echo #ansible-playbook -i /vagrant/sync/ansible/ansible_inventory /vagrant/sync/ansible/playbooks/ansible_nclu_push.yml >>start.sh
 sudo echo #ansible-playbook -i /vagrant/sync/ansible/ansible_inventory /vagrant/sync/ansible/playbooks/ansible_ptm.yml >>start.sh
+sudo echo #also helpful >>start.sh
+sudo echo #sudo lsof -Pi | grep LISTEN >>start.sh
 sudo chmod +x start.sh
 
 #Python Virtual Environment with Ansible Napalm etc
