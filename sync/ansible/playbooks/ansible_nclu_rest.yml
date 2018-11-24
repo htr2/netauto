@@ -1,0 +1,30 @@
+---
+- hosts: all
+  tasks:
+  - name: RestAPi Test - Show counters
+    uri: 
+      url: https://10.0.2.2:21201/nclu/v1/rpc
+      method: POST
+      user: "vagrant"
+      password: "vagrant"
+      validate_certs: no
+      return_content: yes
+      body: {"cmd": "show counters"}
+      body_format: json
+      status_code: 200
+    register: output
+  
+  - name: Result
+    debug:
+      var: output
+
+
+#sudo curl -X POST -k -u vagrant:vagrant -H "Content-Type: application/json" -d '{"cmd": "show counters"}' https://10.0.2.2:21201/nclu/v1/rpc
+
+#Kernel Interface table
+#Iface      MTU    Met    RX_OK    RX_ERR    RX_DRP    RX_OVR    TX_OK    TX_ERR    TX_DRP    TX_OVR  Flg
+#-------  -----  -----  -------  --------  --------  --------  -------  --------  --------  --------  -----
+#eth0      1500      0     5167         0         0         0     3391         0         0         0  BMRU
+#lo       65536      0        0         0         0         0        0         0         0         0  LRU
+#swp1      1500      0     1222         0         1         0     1113         0         0         0  BMRU
+#swp2      1500      0     1187         0         0         0     1143         0         0         0  BMRU
