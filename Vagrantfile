@@ -36,7 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
  
   #to enable nfs sharing this uses the winnfsd plugin (https://github.com/winnfsd/winnfsd/releases). 
   #however as it seems unreliable the 'manual' option is to uncomment the next line (and comment the plugin to prevent conflict)
-  #system "start nfsshare/WinNFSd.exe . /export"
+  #system "start .vagrant\plugins\gems\2.4.4\gems\vagrant-winnfsd-1.4.0\bin . /export"
   #can be manually be mounted / unmounted from linux guests with 
   #sudo mount -o 'vers=3,nolock,udp' -t nfs <your_guest_ip-private_net>:/export /mnt/nfs
   #sudo umount /mnt/nfs
@@ -98,6 +98,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 						switch.vm.network "private_network", virtualbox__intnet: link["name"], auto_config: false
 					end
 				end
+
+				#disable default sync folder
+				switch.vm.synced_folder '.', '/vagrant', diabled: true
+				
 			end
 		end
 
