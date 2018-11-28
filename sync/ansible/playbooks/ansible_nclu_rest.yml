@@ -3,7 +3,7 @@
   tasks:
   - name: RestAPi Test - Show something
     uri: 
-      url: https://10.0.2.2:21201/nclu/v1/rpc
+      url: https://10.0.2.2:{{ api_port }}/nclu/v1/rpc
       method: POST
       user: "vagrant"
       password: "vagrant"
